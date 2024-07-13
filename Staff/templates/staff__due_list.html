@@ -1,0 +1,147 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Due List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Due List </a></li>
+            </ol>
+        </nav>  
+
+    </div><!-- End Page Title -->
+
+
+        <form action="" method="GET">
+        {% csrf_token %}
+        <div class="row">
+                <div class="col-sm-3">{{filter.form.start_date|as_crispy_field}}</div>
+                <div class="col-sm-3">{{filter.form.end_date|as_crispy_field}}</div>
+                <div class="col-sm-3">{{filter.form.student_class|as_crispy_field}}</div>
+                <div class="col-sm-3 py-2"><input type="submit" value="Apply Filter" class="btn btn-primary mt-4"></div>            
+        </div>
+        </form>
+
+    <div class="row mt-2">
+        <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="0" data-aos-duration="1000">
+            <div class="card text-center">
+                <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                    <b>Total Students</b>
+                </div>
+                <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                    data-aos-duration="800">
+                    <h1 class="card-title" style="font-size:32px;"><b>{{total_students}}</b></h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1000">
+            <div class="card text-center">
+                <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                    <b>Total Due Amount </b>
+                </div>
+                
+                <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                    data-aos-duration="800">
+                    <h1 class="card-title" style="font-size:32px;"><b>{{total_due_amount}}</b></h1>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="400" data-aos-duration="1000">
+            <div class="card text-center">
+                <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                    <b>Record Export </b>
+                </div>
+                
+                <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                    data-aos-duration="800">
+ 
+                    <a href="{% url 'export_pdf_deu_records' %}"><img src="{% static 'img/export_pdf.png' %}" alt="" style="width:63px; margin-left:10px;"></a>
+                    <a href="{% url 'export_excel_deu_records' %}"><img src="{% static 'img/export_excel.png' %}" alt="" style="width:63px; margin-left:10px;"></a>
+ 
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="container" style=" overflow:scroll;">
+                     
+                            
+                        <table id="example" class="table table-striped " style="overflow:scroll; width:100%;min-width: max-content;">
+                            <thead>
+                                <tr style="background:rgb(3, 119, 202);">
+                                        <th scope="col" class="text-center text-white" style="">PRN No</th>
+                                        <th scope="col" class="text-center text-white" style="">Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Due Date</th>
+                                        <th scope="col" class="text-center text-white" style="">Due Amount</th>
+                                        <th scope="col" class="text-center text-white" style="">Due Remark</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% if rec %}
+                                {% for r in rec %}
+
+                                <tr>
+                                    <td>{{r.student_prn_no}}</td>
+                                    <td>{{r.student_name}}</td>
+                                    <td>{{r.due_date}}</td> 
+                                    <td>{{r.due_amount}}</td> 
+                                    <td>{{r.due_remark}}</td> 
+                                    <td>
+                                        <center>
+                                            <a href="{% url 'due_clear' r.id %}" class="btn btn-warning px-3">Clear</a> 
+                                            <a href="{% url 'due_update' r.id %}" class="btn btn-primary px-3">Edit</a> 
+                                        </center>
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                              
+                                {% endif %}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+      
+
+</main><!-- End #main -->
+
+
+<script>
+    table = $('#example').DataTable( {
+        paging: true
+    } );
+     
+    table.destroy();
+     
+    table = $('#example').DataTable( {
+        searching: true
+    } );
+</script>
+ 
+{% endblock content %}

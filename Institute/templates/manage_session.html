@@ -1,0 +1,100 @@
+{% extends 'institute_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Session</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Session </a></li>
+    </ol>
+    </nav>
+    <a href="#" class="btn btn-primary text-light" style="position: relative; left:70%; top:-50px;"  data-toggle="modal" data-target="#model_add_session">Add Session</a>
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                  
+
+                    <div class="container">
+                        <div class=" " style=" height:450px; background:#F7FBFC; overflow:scroll; user-select: none; ">
+                            <table class="table table-hover px-4 py-4">
+                                {% if rec %}
+                                <thead>
+                                    <tr style="background:#4678A4;">
+                                        <th scope="col" class="text-center text-white" style="">Financial Year</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for r in rec %}
+                                    <tr class="text-center">
+                                        <td>{{r.financial_year}}</td>
+                                        <td>
+                                        <a href="{% url 'update_session' r.id %}" class="btn btn-warning">Edit</a>
+                                        <a href="{% url 'delete_session' r.id %}" class="btn btn-danger">Delete</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                {% else %}
+                                <center>
+                                    <h3>No Record Found</h3>
+                                </center>
+                                {% endif %}
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+</main><!-- End #main -->
+
+
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="model_add_session" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add Session</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {{form_add_session.financial_year|as_crispy_field}} 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- End Left side columns -->
+    </section>
+
+
+</main><!-- End #main -->
+
+
+{% endblock content %}

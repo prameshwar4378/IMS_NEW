@@ -1,0 +1,23 @@
+table heading color : rgb(3, 119, 202) 
+add krishna thore direct from git hub
+SnyamTech Software Solution
+krishna thore
+
+
+Institute
+   
+
+
+Staff
+    1.  Dues records
+
+    2. Fees records
+        
+    3.Result Dashboard
+        download resunlt if one option select and submit then got a error
+
+    4. subject wise result
+ 
+
+notitfaction
+    noti valid up to filed add calender

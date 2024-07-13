@@ -1,0 +1,57 @@
+{% extends 'student_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    a {
+        text-decoration: none;
+        color: #02375F;
+    }
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Notification</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Notification</a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            {% for r in rec %} 
+            <a href="{% url 'student__web_notification_details' r.id %}">
+                <div class="col-lg-12 mt-2">
+                    <div class="row px-3">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8 px-2 py-2" style="background:white;  border-radius:6px; box-shadow:0px 0px 10px -5px;">
+                            <div style="display:flex;">
+                                <div style="width:80%; font-size:20px; ">
+                                    <b>{{r.notification_subject|slice:40}}.....</b><br>
+                                </div>
+                                <div style="width:20%;font-size:16px; ">
+                                    <span style="position: relative;  ">{{r.date_time}}</span>
+                                </div><br>
+                            </div>
+
+                            <div style="font-size:16px; text-align:justify; padding:10px; padding-top:0px;">{{r.notification_message|slice:80}}.....</div>
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                </div>
+            </a> 
+            {% endfor %}
+
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+{% endblock content %}

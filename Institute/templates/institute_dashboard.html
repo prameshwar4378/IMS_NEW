@@ -1,0 +1,67 @@
+{% extends 'institute_base.html' %}
+{% load static %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Institute Dashboard</h1>
+         
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="mt-5">
+                        <center>
+                            <h3>Welcome, <b>{{request.user.institute_name}}</b></h3>
+                        </center>
+                    </div>
+                    <div class="col-sm-12 mt-5">
+                        <div style="display:flex; justify-content:space-around;">
+
+                            <a href="{% url 'add_staff' %}" style="text-decoration:none; color:#53606C;">
+                                <div style="width:150px; height:150px; background:white; border-radius:10px; box-shadow:0px 0px 7px -2px; padding:10px;">
+                                    <center>
+                                        <img src="{% static 'img/add_user_icon.png' %}" alt="" style="height:70px;width:70px; box-shadow:0px 0px 5px; border-radius:50%; border:2px solid white; ">
+                                        <br> <br>
+                                        <h5>Add Staff</h5>
+                                    </center>
+                                </div>
+                                </a> 
+                            
+                                <a href="{% url 'staff_list' %}" style="text-decoration:none; color:#53606C;">
+                                    <div style="width:150px; height:150px; background:white; border-radius:10px; box-shadow:0px 0px 7px -2px; padding:10px;">
+                                        <center>
+                                            <img src="{% static 'img/user_list_icon.png' %}" alt="" style="height:70px;width:70px; box-shadow:0px 0px 5px; border-radius:50%; border:2px solid white; ">
+                                            <br> <br>
+                                            <h5>Staff List</h5>
+                                        </center>
+                                    </div>
+                                </a> 
+                                        
+                        </div>
+
+                                            
+                            <div class="alert alert-warning alert-dismissible mt-5" role="alert">
+                                <strong>Note :</strong> Currently, all rights have been allocated to staff profile. We kindly request that you create a staff profile and login to efficiently manage your business.
+                                <button type="button" class="btn-close" 
+                                data-bs-dismiss="alert"
+                                aria-label="Close">
+                                </button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+
+
+{% endblock content %}

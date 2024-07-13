@@ -1,0 +1,127 @@
+{% extends 'staff_base.html' %}
+
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Notification</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Notification </a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+
+                <div class="row">
+                    <div class="col-sm-3  py-3 mb-1">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Class</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5>{{data.student_class}}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3  py-3 mb-1">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">PRN No</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5>{{data.student_prn_no}}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3  py-3 mb-1">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Notification valid up to</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5>{{data.notification_valid_up_to}}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3  py-3 mb-2">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Creation Date</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5>{{data.date_time}}</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12  py-3 mb-1">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Subject</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5>{{data.notification_subject}}</h5>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row ">
+                    <div class="col-sm-12  py-3 mb-1">
+                        <div
+                            style="background:white; text-align:justify; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Message</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5 class="text-justify">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.notification_message}}</h5>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    
+                    {% if data.upload_file1 %}
+                    <div class="col-sm-3  py-3 mb-1">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Download Document 1</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5><a href="/media/{{data.upload_file1}}" class="btn btn-primary" download><i class="bi bi-download"></i> Download</a></h5>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if data.upload_file2 %}
+                    <div class="col-sm-3  py-3 mb-1">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Download Document 1</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5><a href="/media/{{data.upload_file2}}" class="btn btn-primary" download><i class="bi bi-download"></i> Download</a></h5>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if data.upload_file3 %}
+                    <div class="col-sm-3  py-3 mb-1">
+                        <div style="background:white; padding:10px;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                            <span style="color:gray;">Download Document 1</span>
+                            <hr style="margin:4px; margin-bottom:10px;">
+                            <h5><a href="/media/{{data.upload_file3}}" class="btn btn-primary" download><i class="bi bi-download"></i> Download</a></h5>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+{% endblock content %}

@@ -1,0 +1,225 @@
+{% extends 'staff_base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Students Attendance</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Attendance </a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+
+
+
+
+            <div class="row mt-4" id="attendance_table">
+                <div class="col-sm-12">
+                    <div style="padding:10px;  box-shadow:0px 0px 10px -4px; border-radius:8px;">
+                        <a href="" data-toggle="modal" data-target="#create_notification" class="btn btn-primary px-5">
+                            Create Notification</a>
+                        <hr>
+
+                        
+                <div class="row ">
+                    <div class="col-sm-4 mt-2" data-aos="zoom-in" data-aos-duration="1000">
+                        <div class="card text-center" style="box-shadow:5px 5px 8px -2px; border:2px solid white;">
+                            <div class="card-header text-dark" style="background:#A0D2FF;">
+                                <b> Total Notification </b>
+                            </div>
+                            <div class="card-header py-2">
+                                <h3 class="card-title" style="font-size:30px;"><b>{{total }}</b></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mt-2" data-aos="zoom-in" data-aos-duration="1000">
+                        <div class="card text-center" style="box-shadow:5px 5px 8px -2px; border:2px solid white;">
+                            <div class="card-header text-dark" style="background:#A0D2FF;">
+                                <b> Active Notification </b>
+                            </div>
+                            <div class="card-header py-2">
+                                <h3 class="card-title" style="font-size:30px;"><b>{{active}}</b></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mt-2" data-aos="zoom-in" data-aos-duration="1000">
+                        <div class="card text-center" style="box-shadow:5px 5px 8px -2px; border:2px solid white;">
+                            <div class="card-header text-dark" style="background:#A0D2FF;">
+                                <b> Inactive Notification </b>
+                            </div>
+                            <div class="card-header py-2">
+                                <h3 class="card-title" style="font-size:30px;"><b>{{inactive}}</b></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                        <br><br>
+                        {% if rec %}
+                        <div style="overflow:scroll; width:100%;">
+                            <table id="example" class="table table-striped"
+                                style="overflow:scroll; width:100%;min-width: max-content;">
+                                <thead>
+                                    <tr style="background:#02B4C3;">
+                                        <th scope="col" class="text-center text-white" style="">Sr.No</th>
+                                        <th scope="col" class="text-center text-white" style="">Publish Date</th>
+                                        <th scope="col" class="text-center text-white" style="">Valid up to</th>
+                                        <th scope="col" class="text-center text-white" style="">Subject</th>
+                                        <th scope="col" class="text-center text-white" style="">Message</th>
+                                        <th scope="col" class="text-center text-white" style="">Documents</th>
+                                        <th scope="col" class="text-center text-white" style="">PRN No</th>
+                                        <th scope="col" class="text-center text-white" style="">Class Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Status</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in rec %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{i.date_time}}</td>
+                                        <td>{{i.notification_valid_up_to}}</td>
+                                        <td>{{i.notification_subject|slice:20}}.....</td>
+                                        <td>{{i.notification_message|slice:20}}.....</td>
+                                        <td>
+                                            
+                                            {% if i.upload_file1 %}<a href="/media/{{i.upload_file1}}" download><i class="bi bi-download"></i></a>{% endif %}
+                                            {% if i.upload_file2 %}<a href="/media/{{i.upload_file2}}" download><i class="bi bi-download"></i></a>{% endif %}
+                                            {% if i.upload_file3 %}<a href="/media/{{i.upload_file3}}" download><i class="bi bi-download"></i></a>{% endif %}
+                                        </td> 
+                                        <td>{{i.student_prn_no}}</td> 
+                                        <td>{{i.student_class}}</td> 
+                                        <td>
+                                            {% if today <= i.notification_valid_up_to %}
+                                                <span class="btn btn-success">Active</span>
+                                            {% elif not i.notification_valid_up_to %}
+                                                <span class="btn btn-success">Active</span>
+                                            {% else %}
+                                                <span class="btn btn-secondary">Inctive</span>
+                                            {% endif %} 
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'web_notification_details' i.id %}"  class="btn btn-primary text-light">More</a> 
+                                            <a href="{% url 'update_web_notification' i.id %}"  class="btn btn-primary text-light"><i class="bi bi-pencil-square px-2"></i></a> 
+                                            <a href="{% url 'delete_web_notification' i.id %}" class="btn btn-danger text-light"><i class="bi bi-trash-fill px-2 "></i></a>
+                                        </td> 
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="create_notification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document"  style="max-width:1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Create Notification</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post"  enctype="multipart/form-data">
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <strong>Note :</strong> "If you select the class_name or insert the student_prn_no, then notifications will appear only for those students who belong to the same data. However, if you do not select these fields, then the notification will appear for all students."
+                        <button type="button" class="btn-close" 
+                          data-bs-dismiss="alert"
+                          aria-label="Close">
+                        </button>
+                    </div>
+                    
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{form.student_class|as_crispy_field}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{form.student_prn_no|as_crispy_field}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{form.notification_valid_up_to|as_crispy_field}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{form.notification_subject|as_crispy_field}}
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{form.notification_message|as_crispy_field}}
+                        </div> 
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{form.upload_file1|as_crispy_field}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{form.upload_file2|as_crispy_field}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{form.upload_file3|as_crispy_field}}
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" value="Sent Notification" class="btn btn-primary px-4 ">
+            </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "paging": true,
+            "pageLength": 10,
+            "searching": true
+        });
+    });
+</script>
+
+{% endblock content %}

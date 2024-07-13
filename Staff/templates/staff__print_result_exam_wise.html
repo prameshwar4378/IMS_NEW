@@ -1,0 +1,292 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Form</title>
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+        font-family: Poppins;
+    }
+
+    * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .page {
+        width: 21cm;
+        min-height: 29.7cm;
+        padding: 0.5cm;
+        margin: 0cm auto;
+        border: 1px #D3D3D3 solid;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+
+    @media print {
+        .page {
+            margin: 0;
+        }
+
+        .header .collage_name h3 {
+            color: #872A49;
+        }
+
+        body {
+            background-color: red;
+        }
+    }
+
+    p {
+        margin-top: -5px;
+    }
+
+
+    .subpage {
+        border: 2px solid rgb(136, 136, 136);
+        height: 28cm;
+        padding: 5px;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 2px solid black;
+    }
+
+    .header .logo {
+        width: 20%;
+    }
+
+    .header .collage_name {
+        width: 80%;
+        text-align: center;
+    }
+
+    .header .collage_name h3 {
+        color: #C02D5E;
+    }
+
+
+    .student_details {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        font-size: 13px;
+    }
+
+    .student_details .heading {
+        width: 3cm;
+    }
+
+    .student_details .data {
+        width: 12cm;
+    }
+
+    .student_details .photo {
+        width: 3cm;
+        padding: 10px;
+    }
+
+    #marks_table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #marks_table td,
+    #marks_table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #marks_table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #marks_table tr:hover {
+        background-color: #ddd;
+    }
+
+    #marks_table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #872A49;
+        color: white;
+    }
+    td{
+        text-align:center;
+    }
+</style>
+
+<body  style="background:gray;">
+    <div class="book">
+        <div class="page">
+            <div class="subpage">
+
+                <section class="header">
+                    <div class="logo">
+                        <img src="/media/{{institute_logo}}" alt=""
+                            style="width: 100px; height:100px;">
+                    </div>
+                    <div class="collage_name">
+                        <h3><b>{{institute_name}}</b></h3>
+                        <p>{{institute_address}}</p>
+                    </div>
+                </section>
+
+
+
+                <div style="display:flex;flex-direction:row;  ">
+                    <div style="width:80%;text-align:center;">
+                        <h4><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                Student Progress Report</b></h4>
+                    </div>
+                    <div style="width:20%; position: relative; right:20px;"><br>
+                        <span style="font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 
+                            PRN No</span> <br>
+                        <span style="color:red;"><b>{{st_prn}}</b></span>
+                    </div>
+                </div>
+
+                <section>
+                    <div class="student_details">
+                        <div class="heading" style="text-align: right;">
+                            <p style="border-bottom:1px solid white; padding:3px;">Student Name :</p>
+                            <p style="border-bottom:1px solid white; padding:3px;">Class :</p>
+                            <p style="border-bottom:1px solid white; padding:3px;">Exam Date :</p>
+                            <p style="border-bottom:1px solid white; padding:3px;">Exam Name :</p>
+                        </div>
+                        <div class="data">
+                            <p style="border-bottom:1px solid gray; padding:3px;">{{st_name}}</p>
+                            <p style="border-bottom:1px solid gray; padding:3px;"> {{st_class}} </p>
+                            <p style="border-bottom:1px solid gray; padding:3px;">{{exam_start_date}} To {{exam_end_date}} </p>
+                            <p style="border-bottom:1px solid gray; padding:3px;"> <b>{{exam_title}}</b></p>
+                        </div>
+                        <div class="photo">
+                            <center>
+                                <div style="width: 120px; height: 120px; border:1px solid gray; ">
+                                    {% if st_profile %}
+                                    <img src="/media/{{st_profile}}" alt="" style="width:100%; height: 100%;">
+                                    {% else %}
+                                    <img src="{% static 'img/profile_sample.jpg' %}" alt="" style="width:100%; height: 100%;">
+                                    {% endif %}
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </section>
+
+                <hr style="border:1.5px solid gray; margin-top:20px; margin-bottom:20px;">
+
+                <section class="marks">
+                    <table id="marks_table">
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Subject / Topic</th>
+                            <th>Min. Marks</th>
+                            <th>Max. Marks</th>
+                            <th>Obtained Marks</th>
+                            <th>Result</th>
+                        </tr>
+                        {% for i in rec %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td style="text-align:left;">{{i.subject_name}}</td>
+                            <td>{{i.min_marks}}</td>
+                            <td>{{i.out_off_marks}}</td>
+                            <td>{{i.obtained_marks}}</td>
+                            <td>{{i.result}}</td>
+                        </tr>
+                        {% endfor %}
+                        
+                        <tr>
+                            <td colspan="2"> <b>Total</b></td>
+                            <td>{{st_total_min}}</td>
+                            <td>{{st_total_out_off}}</td>
+                            <td>{{st_total_obtained}}</td>
+                            <td> </td>
+                        </tr>
+                    </table>
+
+                </section>
+<br>
+                <section>
+                    <div style="display:flex; flex-direction:row;">
+                        <div style="width:70%;padding:10px;padding-top:20px; display:flex;"> 
+                            <div>
+                                <canvas id="pie-chart"></canvas> 
+                            </div>
+ 
+                        </div>
+                        <div style="width:30%; padding:15px;"> 
+                            <div style="background:#872A49;color:white; width:100%;padding:8px; margin-top:10px; border-radius:3px;">
+                                Percentage : <b>{{st_percentage|floatformat:2}} %</b>
+                            </div>  
+                            <div style="background:#872A49;color:white; width:100%;padding:8px; margin-top:10px; border-radius:3px;">
+                                Result : <b>{{st_result}}</b>
+                            </div>    
+                        </div>
+                    </div>
+                </section>
+
+                  {% comment %} <div style="display:flex; flex-direction:row;">
+                    <div style="width:60%;text-align:center;align-item:center;">
+                        <p style="margin-top:40px;">Note : this note about the barcode</p>
+                        <img src="https://firebase.google.com/static/docs/ml-kit/images/examples/qrcode.png" alt="" style="width:100px; height:100px;">
+                    </div>
+                    
+                    <div style="width:40%">
+                        
+                    </div>
+                  </div> {% endcomment %}
+
+            </div>
+
+        </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+
+  var config = {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: {{ data_charts|safe }},
+        backgroundColor: [
+          '#32FF00', '#0036FF', '#FF0000', '#F700FF', '#FFFB00 ','#00FFF0','#FF0083'
+        ],
+        label: 'Subjects'
+      }],
+      labels: {{ labels_charts|safe }}
+    },
+    options: {
+      responsive: true
+    }
+  };
+
+  window.onload = function() {
+    var ctx = document.getElementById('pie-chart').getContext('2d');
+    window.myPie = new Chart(ctx, config);
+  };
+
+</script>
+</body>
+</html>

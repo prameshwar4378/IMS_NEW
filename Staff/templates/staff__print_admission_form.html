@@ -1,0 +1,304 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Form</title>
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+        font-family:Poppins;
+      }
+      
+      * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+      }
+      
+      .page {
+        width: 21cm;
+        min-height: 29.7cm;
+        padding: 0.5cm;
+        margin: 0cm auto;
+        border: 1px #D3D3D3 solid;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+      
+      
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      
+      @media print {
+        .page {
+          margin: 0;
+          border: initial;
+          border-radius: initial;
+          width: initial;
+          min-height: initial;
+          box-shadow: initial;
+          background: initial;
+          page-break-after: always;
+        }
+      }
+
+
+      p{
+        margin-top: -5px;
+      }
+
+      fieldset{
+        border:2px solid rgb(0, 80, 199);
+      }
+      legend{
+        font-weight: bold;
+        color: rgb(0, 80, 199);
+      }
+      .subpage{
+        border:2px solid rgb(136, 136, 136);
+       height:28cm;
+       padding:5px;
+      }
+      .header{
+        display: flex;
+        flex-direction: row;
+        border-bottom:2px solid black;
+      }
+      .header .logo{
+        width:20%;
+      }
+      .header .collage_name{
+        width:80%;
+        text-align: center;
+      }
+
+      .header .collage_name h1{
+        color: blue;
+      }
+      .generel{
+        font-size: 13px;;
+      }
+      .generel .generel_data{
+        border-bottom:2px solid gray;
+        padding: 3px;;
+      }
+      .student_details{
+        margin-top:10px;
+        display: flex;
+        flex-direction: row;
+        font-size: 13px;;
+      }
+
+      .student_details .heading{
+        width: 3cm;
+      }
+
+      .student_details .data{
+        width: 11cm;
+      }
+      .student_details .photo{
+        width: 4.7cm;
+        padding: 10px;
+      }
+
+
+
+
+      .parent_details{
+        margin-top:10px;
+        display: flex;
+        flex-direction: row;
+        font-size: 13px;;
+      }
+
+      .parent_details .heading{
+        width: 3cm;
+      }
+
+      .parent_details .data{
+        width: 15cm;
+      }
+    
+
+
+
+
+      .education_details{
+        margin-top:10px;
+        display: flex;
+        flex-direction: row;
+        font-size: 13px;;
+      }
+
+      .education_details .heading{
+        width: 3cm;
+      }
+
+      .education_details .data{
+        width: 15cm;
+      }
+    
+
+
+
+    
+
+      .course_details{
+        margin-top:10px;
+        display: flex;
+        flex-direction: row;
+        font-size: 13px;;
+      }
+
+      .course_details .heading{
+        width: 3cm;
+      }
+
+      .course_details .data{
+        width: 15cm;
+      }
+    
+</style>
+<body style="background:gray;">
+    <div class="book">
+        <div class="page">
+          <div class="subpage">
+
+            <section class="header">
+              <div class="logo">
+                <img src="/media/{{data.institute_logo}}" alt="" style="width: 100px;">
+              </div>
+              <div class="collage_name">
+                <h1>{{data.institute_name}}</h1>
+                <p>{{data.institute_address}}</p>
+              </div>
+            </section>
+
+            <center>
+              <h3>Student Registration Form</h3>
+            </center>
+
+            <section class="generel">
+              <center>
+                <span class="generel_heading">PRN No :</span><span class="generel_data"><b>{{data.student_prn_no}}</b></span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="generel_heading">Admission for :</span><span class="generel_data"><b>{{data.student_class}}</b></span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="generel_heading">Admission Date :</span><span class="generel_data"><b>{{data.student_admission_date}}</b></span>
+              </center>
+            </section>
+
+            <section style="margin-top: 25px;">
+              <fieldset>
+                <legend>&nbsp;&nbsp;Student Details:&nbsp;&nbsp;</legend>
+                <div class="student_details">
+                  <div class="heading" style="text-align: right;">
+                    <p  style="border-bottom:1px solid white; padding:3px;">Name :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Date of Birth :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Gender :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Mobile No :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Address :</p>
+                  </div>
+                  <div class="data">
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.student_name %} {{data.student_name}} {% else %} - {% endif %}</p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.student_dob %} {{data.student_dob}} {% else %} - {% endif %}</p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.student_gender %} {{data.student_gender}} {% else %} - {% endif %}</p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.student_mobile %} {{data.student_mobile}} {% else %} - {% endif %} </p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{{data.student_village}}, {{data.student_taluka}}, {{data.student_dist}} </p>
+                  </div>
+                  <div class="photo">
+                    <center>
+                      <div style="width: 150px; height: 150px; border:1px solid gray; ">
+                        {% if data.student_profile %}
+                        <img src="{{data.student_profile.url}}" alt="" style="width:100%; height: 100%;">
+                        {% endif %}
+                      </div>
+                    </center>
+                  </div>
+                </div>
+               </fieldset>
+            </section>
+
+            
+            <section style="margin-top: 20px;">
+              <fieldset>
+                <legend>&nbsp;&nbsp;Parent Details&nbsp;&nbsp;</legend>
+                <div class="parent_details">
+                  <div class="heading" style="text-align: right;">
+                    <p  style="border-bottom:1px solid white; padding:3px;">Parent Name :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Mobile No :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Address :</p>
+                  </div>
+                  <div class="data">
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.parent_name %} {{data.parent_name}} {% else %} - {% endif %}</p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.parent_mobile %} {{data.parent_mobile}} {% else %} - {% endif %} </p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">
+                      {% if data.parent_village %} {{data.parent_village}} {% else %} - {% endif %}
+                      {% if data.parent_taluka %} {{data.parent_taluka}} {% else %} - {% endif %}
+                      {% if data.parent_dist %} {{data.parent_dist}} {% else %} - {% endif %}
+                    </p>
+                  </div>
+                </div>
+               </fieldset>
+            </section>
+
+
+            <section style="margin-top: 20px;">
+              <fieldset>
+                <legend>&nbsp;&nbsp;Education Details&nbsp;&nbsp;</legend>
+                <div class="education_details">
+                  <div class="heading" style="text-align: right;">
+                    <p  style="border-bottom:1px solid white; padding:3px;">School/collage :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Address :</p>
+                  </div>
+                  <div class="data">
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.student_collage %} {{data.student_collage}} {% else %} - {% endif %}</p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.student_collage_address %} {{data.student_collage_address}} {% else %} - {% endif %}</p>
+                  </div>
+                </div>
+               </fieldset>
+            </section>
+            <section style="margin-top: 20px;">
+              <fieldset>
+                <legend>&nbsp;&nbsp;Course Details&nbsp;&nbsp;</legend>
+                <div class="course_details">
+                  <div class="heading" style="text-align: right;">
+                    <p  style="border-bottom:1px solid white; padding:3px;">Class :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Batch :</p>
+                    <p  style="border-bottom:1px solid white; padding:3px;">Group/Subject :</p>
+                  </div>
+                  <div class="data">
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.student_class %} {{data.student_class}} {% else %} - {% endif %}</p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.batch %} {{data.batch}} {% else %} - {% endif %}</p>
+                    <p style="border-bottom:1px solid gray; padding:3px;">{% if data.group %} {{data.group}} {% else %} - {% endif %}</p>
+                  </div>
+                </div>
+               </fieldset>
+            </section>
+
+            <section class="signature">
+              <br>
+              <center>
+                <h5>
+                  Authorised Signature 
+                  <span style="margin-left: 200px;">
+                    Student Signature
+                  </span>                  
+                </h5>
+              </center>
+            </section>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

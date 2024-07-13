@@ -1,0 +1,318 @@
+{% extends 'staff_base.html' %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Staff Dashboard</h1>
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Collection <span>| Today</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-currency-rupee"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{total_fees|floatformat:2}}</h6> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Card -->
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Admission <span>| Today</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-person-add"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{today_admission}}</h6> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Card -->
+
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                      <div class="card info-card sales-card">
+                          <div class="card-body">
+                              <h5 class="card-title">Present Students <span> | Today</span></h5>
+                              <div class="d-flex align-items-center">
+                                  <div
+                                      class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-person-check"></i>
+                                  </div>
+                                  <div class="ps-3">
+                                      <h6>{{total_present_students}}</h6>
+                                      <span class="text-success small pt-1 fw-bold">{{present_student_in_percentage|floatformat:0}}%</span> <span
+                                          class="text-muted small pt-2 ps-1">student fill attendance</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- End Card -->
+
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                      <div class="card info-card sales-card">
+                          <div class="card-body">
+                              <h5 class="card-title">Total Amount <span> | Year | {{request.user.academic_session}}</span></h5>
+                              <div class="d-flex align-items-center">
+                                  <div
+                                      class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-currency-dollar"></i>
+                                  </div>
+                                  <div class="ps-3">
+                                      <h6>{{total_allocated_fees}}</h6>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- End Card -->
+
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                      <div class="card info-card sales-card">
+                          <div class="card-body">
+                              <h5 class="card-title">Collected Amount <span> | Year | {{request.user.academic_session}}</span></h5>
+                              <div class="d-flex align-items-center">
+                                  <div
+                                      class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-currency-dollar"></i>
+                                  </div>
+                                  <div class="ps-3">
+                                      <h6>{{total_collected_amount}}</h6>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- End Card -->
+
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                      <div class="card info-card sales-card">
+                          <div class="card-body">
+                              <h5 class="card-title">Pending Amount <span> | Year | {{request.user.academic_session}}</span></h5>
+                              <div class="d-flex align-items-center">
+                                  <div
+                                      class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-currency-dollar"></i>
+                                  </div>
+                                  <div class="ps-3">
+                                      <h6>{{total_pending_fees}}</h6>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- End Card -->
+
+
+
+
+
+
+
+                    <!-- Card Start -->
+                    <div class="col-sm-7">
+                      <div class="card recent-sales overflow-auto" style="height:91.5%;">
+
+                          <div class="card-body">
+                            <h5 class="card-title">Expenses <span>| Year</span></h5>
+                              <div >
+                                <canvas id="bar-chart" style="width:100%;"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div><!-- End Card -->
+
+                    <!-- Card Start -->
+                    <div class="col-sm-5">
+                      <div class="card recent-sales overflow-auto" style="height:91.5%;">
+
+                          <div class="card-body">
+                              <h5 class="card-title">Students <span> | Active</span></h5>
+                              <div >
+                                  <canvas id="pie-chart" style="width:100%;"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div><!-- End Card -->
+
+
+                    <!-- Card Start -->
+                    <div class="col-sm-6">
+                        <div class="card recent-sales overflow-auto">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Result <span>| {{exam_name_for_result_chart}}</span></h5>
+                                <div >
+                                    <canvas id="result_chart" style="width:100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Card -->
+
+                    <!-- Card Start -->
+                    <div class="col-sm-6">
+                        <div class="card recent-sales overflow-auto">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Notifications <span>| Active / Inactive</span></h5>
+                                <div >
+                                    <canvas id="notification_chart" style="width:100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Card -->
+
+
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+
+<script>
+    var config = {
+        type: 'bar',
+        data: {
+          datasets: [{
+            data: {{ data_charts_expenses|safe }},
+            backgroundColor: [
+            '#054483', '#02BC3D', '#E11717', '#F700FF', '#FFFB00 ','#00FFF0','#FF0083'
+            ],
+            label: 'Expenses'
+          }],
+          labels: {{ labels_charts_expenses|safe }}
+        },
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      };
+  
+    var config1 = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: {{ data_active_students|safe }},
+          backgroundColor: [
+          '#02BC3D', '#054483', '#FF0000', '#F700FF', '#FFFB00 ','#00FFF0','#FF0083'
+          ],
+          label: 'Subjects'
+        }],
+        labels: {{ label_active_students|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    
+    var config2 = {
+        type: 'polarArea',
+        data: {
+          datasets: [{
+            data: {{ data_marks_result|safe }},
+            backgroundColor: [
+            '#054483', '#02BC3D', '#E11717', '#F700FF', '#FFFB00 ','#00FFF0','#FF0083'
+            ],
+            label: 'Results'
+          }],
+          labels: {{ label_subject_name_result|safe }}
+        },
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      };
+  
+
+      var config3 = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: {{ data_notification|safe }},
+            backgroundColor: [
+            '#054483', '#02BC3D', '#E11717', '#F700FF', '#FFFB00 ','#00FFF0','#FF0083'
+            ],
+            label: 'Notifications'
+          }],
+          labels: {{ label_notification|safe }}
+        },
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      };
+  
+
+    window.onload = function() {
+      var ctx = document.getElementById('bar-chart').getContext('2d');
+      window.myBar = new Chart(ctx, config);
+  
+      var ctx1 = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx1, config1);
+
+      var ctx1 = document.getElementById('result_chart').getContext('2d');
+      window.myPie = new Chart(ctx1, config2);
+      
+      var ctx1 = document.getElementById('notification_chart').getContext('2d');
+      window.myPie = new Chart(ctx1, config3);
+    };
+  
+  </script>
+  
+{% endblock content %}

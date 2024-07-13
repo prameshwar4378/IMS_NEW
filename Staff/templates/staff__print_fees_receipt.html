@@ -1,0 +1,320 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Form</title>
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #fafafa;
+        font-size: 10pt;
+        font-family: 'Poppins', sans-serif
+    }
+
+    * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box
+    }
+
+    .page {
+        width: 21cm;
+        min-height: 29.7cm;
+        padding: .5cm;
+        margin: 0cm auto;
+        border: 1px #d3d3d3 solid;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1)
+    }
+
+    @page {
+        size: A4;
+        margin: 0
+    }
+
+    @media print {
+        .page {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always
+        }
+    }
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 2px solid black
+    }
+
+    .logo {
+        width: width:20%;
+        padding: 5px
+    }
+
+    .institute_title {
+        width: 80%
+    }
+
+    .deatils {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: -120px
+    }
+
+    .left {
+        padding: 5px;
+        padding-left: 1px;
+        width: 160px
+    }
+
+    .right {
+        padding: 5px;
+        width:90%;
+    }
+
+    .title {
+        text-align: right;
+        padding: 5px
+    }
+
+    .description {
+        padding: 5px;
+        border-bottom: 1px solid gray;
+        width: 100%
+    }
+</style>
+
+<body>
+    <div class="book" style="background:gray;">
+        <div class="page">
+            <div class="subpage">
+                <div class="office_copy" style="border:2px solid black;border-radius:10px">
+                    <div style="border-bottom:2px solid black;text-align:center;padding:5px">
+                        student copy 
+                    </div>
+                    <div class="header">
+                        {% if institute_details.institute_logo %}
+                        <div class="logo"><img src="/media/{{institute_details.institute_logo}}" alt="" style="width:120px; height:50px;"></div>
+                        {% else %}
+                        <div class="logo"><img src="{% static 'img/developer_logo.png' %}" alt="" style="width:120px; height:50px;"></div>
+                        {% endif %}
+                        <div class="institute_title" style="text-align:center;padding-top:5px">
+                            <span style="font-size:17px;font-weight:bold">{{institute_details.institute_name}}</span><br>
+                            <span>{{institute_details.institute_address}}</span>
+                        </div>
+                    </div>
+                    <div style="padding:5px;padding-top:10px">
+                        <center>Fees Receipt
+                        </center>
+                    </div>
+                    <div class="deatils">
+                        <div class="left">
+                            <div class="title">
+                                Paid Date : 
+                            </div>
+                            <div class="title">
+                                Student Name :
+                            </div>
+                            <div class="title">
+                                PRN No :
+                            </div>
+                            <div class="title">
+                                Class :
+                            </div>
+                            <div class="title">
+                                Payment Mode :
+                            </div>
+                            <div class="title">
+                                Amount In Word :
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="description">
+                                {{data.received_date}}
+                            </div>
+                            <div class="description">
+                               {{data.student_name}}
+                            </div>
+                            <div class="description">
+                                {{data.student_prn_no}}
+                            </div>
+                            <div class="description">
+                                {{data.student_class}}
+                            </div>
+                            <div class="description">
+                                {{data.payment_mode}}
+                            </div>
+                            <div class="description">
+                                {{data.amount_word}}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="border:10px solid white;position:relative;left:560px;top:-70px;width:180px;border-radius:17px">
+                        <div class="amount"
+                            style="border:2px solid gray;border-radius:10px;text-align:center;overflow:hidden">
+                            <div style="color:white;padding:15px" class="amount-head">
+                                <img src="{% static 'img/amount_header_bg.png' %}" alt=""
+                                    style="width:190px;height:50px;margin-bottom:-40px;position:relative;top:-20px;left:-20px">
+                                <h4 style="margin-bottom:-45px;position:relative;top:-30px;color:black">Paid Amount
+                                </h4>
+                            </div>
+                            <div style="background:white;padding:5px">
+                                <h3>{{data.received_amount}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="due_date" style="display:flex">
+                        <div style="width:155px;solid gray;text-align:right;padding:5px">Due Date : </div>
+                        {% if data.due_date %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">{{data.due_date}}</div>
+                        {% else %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">------</div>
+                        {% endif %}
+                        <div style="width:150px;solid gray;padding:5px;text-align:right">Due Amount :</div>
+
+                        {% if data.due_amount %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">{{data.due_amount}}</div>
+                        {% else %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">------</div>
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="footer" style="display:flex;border-top:2px solid black">
+                        <div class="footer-left" style="width:50%;text-align:center;padding:15px">
+                            Authorised Signature
+                        </div>
+                        <div class="footer-right" style="width:50%;text-align:center;padding:15px">
+                            Student Signature
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <hr style="border:1px dotted gray">
+                <br>
+                <br>
+
+
+                <div class="office_copy" style="border:2px solid black;border-radius:10px">
+                    <div style="border-bottom:2px solid black;text-align:center;padding:5px">
+                        office copy
+                    </div>
+                    <div class="header">
+                        {% if institute_details.institute_logo %}
+                        <div class="logo"><img src="/media/{{institute_details.institute_logo}}" alt="" style="width:120px; height:50px;"></div>
+                        {% else %}
+                        <div class="logo"><img src="{% static 'img/developer_logo.png' %}" alt="" style="width:120px; height:50px;"></div>
+                        {% endif %}
+                        <div class="institute_title" style="text-align:center;padding-top:5px">
+                            <span style="font-size:17px;font-weight:bold">{{institute_details.institute_name}} </span><br>
+                            <span>{{institute_details.institute_address}}</span>
+                        </div>
+                    </div>
+                    <div style="padding:5px;padding-top:10px">
+                        <center>Fees Receipt
+                        </center>
+                    </div>
+                    <div class="deatils">
+                        <div class="left">
+                            <div class="title">
+                                Paid Date : 
+                            </div>
+                            <div class="title">
+                                Student Name :
+                            </div>
+                            <div class="title">
+                                PRN No :
+                            </div>
+                            <div class="title">
+                                Class :
+                            </div>
+                            <div class="title">
+                                Payment Mode :
+                            </div>
+                            <div class="title">
+                                Amount In Word :
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="description">
+                                {{data.received_date}}
+                            </div>
+                            <div class="description">
+                               {{data.student_name}}
+                            </div>
+                            <div class="description">
+                                {{data.student_prn_no}}
+                            </div>
+                            <div class="description">
+                                {{data.student_class}}
+                            </div>
+                            <div class="description">
+                                {{data.payment_mode}}
+                            </div>
+                            <div class="description">
+                                {{data.amount_word}}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="border:10px solid white;position:relative;left:560px;top:-70px;width:180px;border-radius:17px">
+                        <div class="amount"
+                            style="border:2px solid gray;border-radius:10px;text-align:center;overflow:hidden">
+                            <div style="color:white;padding:15px" class="amount-head">
+                                <img src="{% static 'img/amount_header_bg.png' %}" alt=""
+                                    style="width:190px;height:50px;margin-bottom:-40px;position:relative;top:-20px;left:-20px">
+                                <h4 style="margin-bottom:-45px;position:relative;top:-30px;color:black">Paid Amount
+                                </h4>
+                            </div>
+                            <div style="background:white;padding:5px">
+                                <h3>{{data.received_amount}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="due_date" style="display:flex">
+                        <div style="width:155px;solid gray;text-align:right;padding:5px">Due Date : </div>
+                        {% if data.due_date %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">{{data.due_date}}</div>
+                        {% else %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">------</div>
+                        {% endif %}
+                        <div style="width:150px;solid gray;padding:5px;text-align:right">Due Amount :</div>
+
+                        {% if data.due_amount %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">{{data.due_amount}}</div>
+                        {% else %}
+                        <div style="width:220px;border-bottom:2px solid gray;padding:5px">------</div>
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="footer" style="display:flex;border-top:2px solid black">
+                        <div class="footer-left" style="width:50%;text-align:center;padding:15px">
+                            Authorised Signature
+                        </div>
+                        <div class="footer-right" style="width:50%;text-align:center;padding:15px">
+                            Student Signature
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+</body>
+
+</html>

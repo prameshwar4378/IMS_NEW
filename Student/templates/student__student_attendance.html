@@ -1,0 +1,268 @@
+{% extends 'student_base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+
+</style>
+<main id="main" class="main" >
+
+    <div class="pagetitle">
+        <h1>Students Attendance</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Attendance </a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard" >
+        <div class="row" >
+            <!-- Left side columns -->
+            <div class="col-lg-12" >
+                    <div class="row">
+                        
+                        <div class="col-sm-8 mt-3">
+                            <div class="row">
+                                 <form action="" method="get">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                    <div class="col-sm-6">
+                                        {{filter.form.start_date|as_crispy_field}}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        {{filter.form.end_date|as_crispy_field}}
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="Apply Filter">
+                                    </div>
+                                 </form>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-4 mt-3">
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8" data-toggle="modal" data-target="#create_attendance"
+                                    style="cursor:pointer;">
+                                    <div
+                                        style="width:100%; height:auto; border:1px solid gray; background:white; border-radius:10px; padding:15px; box-shadow:0px 0px 10px -3px;">
+                                        <center>
+                                            <div>
+                                                <canvas id="pie-chart"></canvas>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                        </div>
+        
+                </div>
+
+                    <hr>
+    
+                    <div class="row mt-4" id="attendance_table">
+                        <div class="col-sm-12">
+                            <div style="padding:10px;  box-shadow:0px 0px 10px -4px; border-radius:8px;">
+     
+                                    <div class="row">
+    
+                                        <div class="col-sm-3 mt-3">
+                                            <div class="row">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10">
+                                                    <div
+                                                        style="width:100%;display:flex; height:auto; border:1px solid gray; background-image: linear-gradient(to bottom right, #EC1B74, #B01859); border-radius:10px; padding:15px; box-shadow:0px 0px 10px -3px;">
+                                                        <div style="width:30%; border-right:2px solid gray;">
+                                                            <div
+                                                                style="background:white;color:#DD2573;padding:10px; border-radius:50%; font-size:25px; width:50px; height:50px;position: relative;top:10px;">
+                                                                <span style="position: relative;top:-5px; left:2px;"><i
+                                                                        class="bi bi-calendar2-event"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:70%;color:white;">
+                                                            <center>
+                                                                <p>Total</p>
+                                                                <h3 class="mt-2"><b> {{total_attendance_count}}</b></h3>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-sm-3 mt-3">
+                                            <div class="row">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10">
+                                                    <div
+                                                        style="width:100%;display:flex; height:auto; border:1px solid gray; background-image: linear-gradient(to bottom right, #46CB10, #318111); border-radius:10px; padding:15px; box-shadow:0px 0px 10px -3px;">
+                                                        <div style="width:30%; border-right:2px solid gray;">
+                                                            <div
+                                                                style="background:white;color:#46CB10;padding:10px; border-radius:50%; font-size:25px; width:50px; height:50px;position: relative;top:10px;">
+                                                                <span style="position: relative;top:-5px; left:2px;"><i
+                                                                        class="bi bi-calendar2-check"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:70%;color:white;">
+                                                            <center>
+                                                                <p>Present</p>
+                                                                <h3 class="mt-2"><b>{{present_rec_count}}</b></h3>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-sm-3 mt-3">
+                                            <div class="row">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10">
+                                                    <div
+                                                        style="width:100%;display:flex; height:auto; border:1px solid gray; background-image: linear-gradient(to bottom right, #94130F, #CB1610); border-radius:10px; padding:15px; box-shadow:0px 0px 10px -3px;">
+                                                        <div style="width:30%; border-right:2px solid gray;">
+                                                            <div
+                                                                style="background:white;color:#CB1610;padding:10px; border-radius:50%; font-size:25px; width:50px; height:50px;position: relative;top:10px;">
+                                                                <span style="position: relative;top:-5px; left:2px;"><i
+                                                                        class="bi bi-calendar2-x"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:70%;color:white;">
+                                                            <center>
+                                                                <p>Absent</p>
+                                                                <h3 class="mt-2"><b>{{absent_rec_count}}</b></h3>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-sm-3 mt-3">
+                                            <div class="row">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10">
+                                                    <div
+                                                        style="width:100%;display:flex; height:auto; border:1px solid gray; background-image: linear-gradient(to bottom right, #12CDB4, #0E8D7C); border-radius:10px; padding:15px; box-shadow:0px 0px 10px -3px;">
+                                                        <div style="width:30%; border-right:2px solid gray;">
+                                                            <div
+                                                                style="background:white;color:#12CDB4;padding:10px; border-radius:50%; font-size:25px; width:50px; height:50px;position: relative;top:10px;">
+                                                                <span style="position: relative;top:-5px; left:2px;"><i
+                                                                        class="bi bi-calendar3-week"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:70%;color:white;">
+                                                            <center>
+                                                                <p>Present Avg</p>
+                                                                <h3 class="mt-2"><b> {{percentage|floatformat:2}}%</b></h3>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                    <br><br>
+                                    {% if filter_total_attendance_rec %}
+                                    <div style="overflow:scroll; width:100%;">
+                                    <table id="example" class="table table-striped"
+                                        style="overflow:scroll; width:100%;min-width: max-content;">
+                                        <thead>
+                                            <tr style="background:#02B4C3;">
+                                                <th scope="col" class="text-center text-white" style="">Sr.No</th>
+                                                <th scope="col" class="text-center text-white" style="">Date</th>
+                                                <th scope="col" class="text-center text-white" style="">PRN No</th>
+                                                <th scope="col" class="text-center text-white" style="">Student Name</th>
+                                                <th scope="col" class="text-center text-white" style="">Class</th>
+                                                <th scope="col" class="text-center text-white" style="">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in filter_total_attendance_rec %}
+                                            <tr>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>{{i.attendance_date}}</td>
+                                                <td>{{i.student_prn_no}}</td>
+                                                <td>{{i.student_name}}</td>
+                                                <td>{{i.student_class}}</td>
+                                                {% if i.is_present  %}
+                                                <td style="text-align:center;"><span
+                                                        style="background:green; border-radius:50px; color:white; padding:0 40px 0 40px;">Present</span>
+                                                </td>
+                                                {% else %}
+                                                <td style="text-align:center;"><span
+                                                        style="background:red; border-radius:50px; color:white; padding:0 40px 0 40px;">Absent</span>
+                                                </td>
+                                                {% endif %}
+    
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table> 
+                                </div>
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Left side columns -->
+        </section>
+    
+    </main><!-- End #main -->
+    
+
+       
+
+<script>
+    $(document).ready( function () {
+  $('#example').DataTable();
+});
+</script>
+
+<script>
+   $(document).ready( function () {
+  $('#myTable').DataTable({
+    "paging": true,
+    "pageLength": 10,
+    "searching": true
+  });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+
+  var config = {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: {{ data_charts|safe }},
+        backgroundColor: [
+          '#32FF00', '#0036FF', '#FF0000', '#F700FF', '#FFFB00 ','#00FFF0','#FF0083'
+        ],
+        label: 'Subjects'
+      }],
+      labels: {{ labels_charts|safe }}
+    },
+    options: {
+      responsive: true
+    }
+  };
+
+  window.onload = function() {
+    var ctx = document.getElementById('pie-chart').getContext('2d');
+    window.myPie = new Chart(ctx, config);
+  };
+
+</script>
+
+{% endblock content %}

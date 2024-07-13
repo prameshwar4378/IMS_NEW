@@ -1,0 +1,113 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Schedule Exam</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Schedule Exam</a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8" style="background:white;  border-radius:10px; box-shadow:0px 0px 10px -5px;">
+                        <br>
+                        <form action="" method="post" style="padding:20px;">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <center>
+                                <input type="submit" value="Submit" class="btn btn-primary px-5">
+                            </center>
+                        </form>
+                    </div>
+                    <div class="col-sm-2"></div>
+
+ 
+
+
+
+                    <div class="container mt-5" style=" overflow:scroll;">
+                        <table id="example" class="table table-striped " style="overflow:scroll; width:100%;min-width: max-content;">
+                            <thead>
+                                <tr style="background:rgb(3, 119, 202);">
+                                        <th scope="col" class="text-center text-white" style="">Sr.No</th>
+                                        <th scope="col" class="text-center text-white" style="">Class Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Exam Title</th>
+                                        <th scope="col" class="text-center text-white" style="">Start Date</th>
+                                        <th scope="col" class="text-center text-white" style="">End Date</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if rec %}
+                                {% for r in rec %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{r.class_name}}</td>
+                                    <td>{{r.exam_title}}</td>
+                                    <td>{{r.exam_start_date}}</td>
+                                    <td>{{r.exam_end_date}}</td> 
+                                    <td>
+                                        <center>
+ 
+                                        <a href="{% url 'delete_exam_schedule' r.id %}"
+                                            class="btn btn-danger px-3">Delete</a>
+                                    </center>
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                             
+                             
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+ 
+<script>
+    document.getElementById('id_academic_session').value="{{request.user.academic_session}}"
+</script>
+
+<script>
+    $(document).ready( function () {
+  $('#example').DataTable();
+});
+</script>
+
+<script>
+   $(document).ready( function () {
+  $('#myTable').DataTable({
+    "paging": true,
+    "pageLength": 10,
+    "searching": true
+  });
+});
+</script>
+{% endblock content %}

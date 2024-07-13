@@ -1,0 +1,62 @@
+{% extends 'developer_base.html' %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Import Export</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Import Export</a></li>
+            </ol>
+        </nav> 
+        <br>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" name="institute_import">
+                        <input type="Submit" value="Import" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+
+
+
+
+
+
+
+
+<script>
+    table = $('#example').DataTable( {
+        paging: true
+    } );
+     
+    table.destroy();
+     
+    table = $('#example').DataTable( {
+        searching: true
+    } );
+</script>
+
+
+<script>
+    function delete_staff(id,staff_name){
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,222 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Add Student</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">add student</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+
+
+                    <div class="container" style="max-width:90%;">
+
+                        {% comment %} <div class="row">
+                            <form action="" method="get" novalidate>
+                                <div class="col-sm-4">{{form.academic_session|as_crispy_field}}</div>
+                                <input type="submit" value="Apply" class="btn btn-info" >
+                            </form>
+                        </div> {% endcomment %}
+
+
+
+                        <form method="POST" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+
+
+                            <div class="row mt-3" style="background:#A0D2FF; padding:8px; border-radius:6px;">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <h4><b>General Information</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4" style="display:none">{{ form.academic_session|as_crispy_field }}</div>
+                                        <div class="col-sm-4">{{form.student_prn_no|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.student_admission_date|as_crispy_field}}</div>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div class="row mt-3" style="background:#A0D2FF; padding:8px; border-radius:6px;">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <h4><b>Student Details</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">{{form.student_profile|as_crispy_field}}</div>
+                                        <div class="col-sm-6">{{form.student_name|as_crispy_field}}</div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">{{form.student_gender|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.student_dob|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.student_mobile|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">{{form.student_village|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.student_taluka|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.student_dist|as_crispy_field}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3" style="background:#A0D2FF; padding:8px; border-radius:6px;">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <h4><b>Parent Details</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">{{form.parent_name|as_crispy_field}}</div>
+                                        <div class="col-sm-6">{{form.parent_mobile|as_crispy_field}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">{{form.parent_village|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.parent_taluka|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.parent_dist|as_crispy_field}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3" style="background:#A0D2FF; padding:8px; border-radius:6px;">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <h4><b>Collage Details</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">{{form.student_collage|as_crispy_field}}</div>
+                                        <div class="col-sm-6">{{form.student_collage_address|as_crispy_field}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3" style="background:#A0D2FF; padding:8px; border-radius:6px;">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <h4><b>Course Details</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">{{form.student_class|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.batch|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.group|as_crispy_field}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="row mt-3" style="background:#A0D2FF; padding:8px; border-radius:6px;">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <h4><b>Active Status</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <span style="display:none;">{{form.is_student|as_crispy_field}}</span>
+                                        <div class="col-sm-12">{{form.status|as_crispy_field}}</div> 
+                                    </div> 
+                                </div>
+                            </div>
+
+                            
+                            <div class="row mt-3" style="background:#A0D2FF; padding:8px; border-radius:6px;">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <h4><b>Create Profile</b></h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p class="alert alert-warning">Use system-generated credentials <span onclick=set_username() class="btn btn-secondary py-0">Click me</span>  <br>
+                                            if student_name = <b>Sagar</b> and date_of_birth = 21-02-1998  password = <b>Saga@1998</b></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">{{form.username|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.password1|as_crispy_field}}</div>
+                                        <div class="col-sm-4">{{form.password2|as_crispy_field}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <center> 
+                                <input type="submit" value="Submit" class="btn btn-primary text-light mt-4 px-5 px-3">
+                                <input type="reset" value="Clear" class="btn btn-warning  mt-4 px-5 px-3">
+                            </center>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+    <script data-collage-name="{{ collage }}" data-education-session={{academic_session}}  data-prn-no={{auto_prn}}>
+        var collage_name = document.currentScript.getAttribute('data-collage-name');
+        document.getElementById("id_student_collage").value = collage_name;
+
+        var academic_session = document.currentScript.getAttribute('data-education-session');
+        document.getElementById("id_academic_session").value = academic_session;
+
+        var prn_no = document.currentScript.getAttribute('data-prn-no');
+        document.getElementById("id_student_prn_no").value = prn_no;
+    </script>
+ 
+    <script>
+        function set_username(){
+                const studentNameInput = document.getElementById("id_student_name");
+                const dateOfBirthInput = document.getElementById("id_student_dob");
+                const prn_no = document.getElementById("id_student_prn_no");
+ 
+                if (studentNameInput.value.trim() === "")
+                {
+                    alert("Student Name Missing ...!")
+                }
+                else if (dateOfBirthInput.value.trim() === "")
+                {
+                    alert("Date of Birth Missing ...!")
+
+                }
+                else if (prn_no.value.trim() === "")
+                {
+                    alert("PRN No Missing Missing ...!")
+
+                }
+                else
+                {    
+                    firstName = studentNameInput.value.split(" ")[0].toLowerCase();
+                    
+                    let date_parts = dateOfBirthInput.value.split('-');
+                    //let formattedDate = date_parts[2] + date_parts[1] + date_parts[0];
+                    
+                    let split_name_for_pass = firstName.charAt(0).toUpperCase() + firstName.slice(1, 4);
+                    
+                    //let username = firstName + formattedDate
+                    let password = split_name_for_pass + '@' + date_parts[0];
+
+                    document.getElementById("id_username").value=prn_no.value
+                    document.getElementById("id_password1").value=password
+                    document.getElementById("id_password2").value=password
+
+                }
+
+        } 
+    </script>
+{% endblock content %}

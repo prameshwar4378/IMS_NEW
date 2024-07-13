@@ -1,0 +1,126 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Subject wise</title>
+</head>
+<!-- Bootstrap 5 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+<style>
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 2px solid black;
+    }
+
+    .header .collage_name {
+        width: 100%;
+        text-align: center;
+    }
+
+    .header .collage_name h3 {
+        color: #C02D5E;
+    }
+
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 1em;
+        font-family: sans-serif;
+        min-width: 400px;
+    }
+
+    h1{
+        color: #009879;
+        font-size:30px;
+        margin-bottom:-40px;
+    }
+
+    table th {
+        background-color: #009879;
+        color: #ffffff;
+        padding: 6px 0px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    table td {
+        padding: 6px 0px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    table tr {
+        background-color: #f8f8f8; 
+    }
+
+
+</style>
+
+<body>
+    <div class="book">
+        <div class="page">
+            <br><br>
+            <section class="header">
+                <div class="collage_name">
+                    <span style="font-size:25px; padding:1px; "><b>{{institute_name}}</b></span> <br>
+                    <p>{{institute_address}}</p>
+                </div>
+            </section>
+            
+            <section>
+                <div style="  padding:40px; padding-left:60px;">
+                    <div>
+                        Student Name : <b>{{student_name}} </b><br>
+                        PRN No : <b>{{student_prn_no}}</b> <br>
+                        Student Class : <b>{{student_class}}</b> <br>
+                        Subject Name : <b>{{subject_name}}</b><br>
+                
+                    </div>
+                </div>
+            </section>
+             
+            {% if rec %}
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Sr.No</th>
+                        <th scope="col">Exam Name</th>
+                        <th scope="col">Exam Date</th>
+                        <th scope="col">Min Mark</th>
+                        <th scope="col">Max Marks</th>
+                        <th scope="col">Obtained Marks</th>
+                        <th scope="col">Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in rec %}
+                    <tr>
+                        <td scope="row">{{ forloop.counter }}</td>
+                        <td style="text-align:left; padding-left:5px;">{{r.exam_title}}</td>
+                        <td style="text-align:left; padding-left:5px;">{{r.exam_start_date}}</td>
+                        <td style="text-align:left; padding-left:5px;">{{r.min_marks}}</td>
+                        <td style="text-align:left; padding-left:5px;">{{r.out_off_marks}}</td>
+                        <td style="text-align:left; padding-left:5px;">{{r.obtained_marks}}</td>
+                        <td style="text-align:left; padding-left:5px;">{{r.result}}</td>
+                    </tr>
+                    {% endfor %}
+
+
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

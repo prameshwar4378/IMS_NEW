@@ -1,0 +1,88 @@
+{% extends 'staff_base.html' %}
+
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Students Results</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Students Result</a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="container" style=" overflow:scroll;">
+                        <table id="example" class="table table-striped " style="overflow:scroll; width:100%;min-width: max-content;">
+                            <thead>
+                                <tr style="background:#02B4C3;">
+                                        <th scope="col" class="text-center text-white" style="">PRN No</th>
+                                        <th scope="col" class="text-center text-white" style="">Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Gender</th>
+                                        <th scope="col" class="text-center text-white" style="">Mobile No</th>
+                                        <th scope="col" class="text-center text-white" style="">Class</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if rec %}
+                                {% for r in rec %}
+                                <tr>
+                                    <td>{{r.student_prn_no}}</td>
+                                    <td>{{r.student_name}}</td>
+                                    <td>{{r.student_gender}}</td>
+                                    <td>{{r.student_mobile}}</td>
+                                    <td>{{r.student_class}}</td>
+                                    <td>
+                                        <center>
+                                            <a href="{% url 'student_result_dashboard' r.id %}"
+                                            class="btn btn-warning px-3">Manage</a> 
+                                    </center>
+
+                                    </td>
+                                </tr>
+                                {% endfor %} 
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+
+
+
+<script>
+    $(document).ready( function () {
+  $('#example').DataTable();
+});
+</script>
+
+<script>
+   $(document).ready( function () {
+  $('#myTable').DataTable({
+    "paging": true,
+    "pageLength": 10,
+    "searching": true
+  });
+});
+</script>
+{% endblock content %}

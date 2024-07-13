@@ -1,0 +1,109 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+<style>
+  input[type=checkbox] {
+    font-size: 30px;
+    position: relative;
+    top:-5px;
+    left:20px;
+  }
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Update Attendance</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Update Attendance</a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            
+          <div class="container" style="max-width:1000px; box-shadow:0px 0px 10px -3px; border-radius:10px; padding:20px;">
+            <form method="POST">
+              {% csrf_token %}
+              
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="txt_date" class="form-label requiredField mt-1">Date *</label>
+                  <input type="text" name="txt_date" id="txt_date" value="{{date}}"
+                      class="form-control " disabled required>
+              </div>
+              <div class="col-sm-6">
+                <label for="txt_class" class="form-label requiredField mt-1">Class *</label>
+                <input type="text" name="txt_class" id="txt_class"  value="{{class_name}}"
+                    class="form-control " disabled required>
+            </div>
+              </div>
+              <hr>
+              {{ formset.management_form}}
+
+              <table id="studenttable" class="table table-sm">
+                <thead>
+                  <tr style="background:#02B4C3;color:white;">
+                    <th style="border-radius:6px 0 0 6px;">Sr.No</th>
+                    <th>Name</th>
+                    <th>PRN No</th>
+                    <th  style="border-radius:0 6px 6px 0;">Status</th> 
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for form in formset %}
+                  {% comment %} {{ form.id}} {% endcomment %}
+                    <tr>
+                      <td>{{forloop.counter }}</td>
+                      <td style="display:none;">{{form.id }}</td>
+                      <td>{{form.student_name}}</td> 
+                      <td>{{form.student_prn_no }}</td> 
+                      <td>{{form.is_present }}</td> 
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <hr>
+            <center>
+              <a href=""   data-toggle="modal" data-target="#attendace_submit" class="btn btn-primary px-5">Submit</a>
+            </center>
+            <!-- Modal -->
+            <div class="modal fade" id="attendace_submit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary">
+                    <h4 class="modal-title text-white" id="exampleModalLongTitle">Submit Attendance Records</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body text-left">
+                    <!-- ======= Note :- This space is for only note....   ======= --> <br>
+                    <h5>Are you sure to Submit</h5>
+                  </div>
+                  <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary bgcolor px-3" data-dismiss="modal">No</button>
+                    <input type="submit" value="Yes" class="btn btn-primary px-4"> &nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+              </form>
+        </div>
+
+            
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+{% endblock content %}

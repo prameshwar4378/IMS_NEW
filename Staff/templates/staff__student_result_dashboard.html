@@ -1,0 +1,487 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+
+<style>
+    .custom-modal .modal-dialog {
+        max-width: 1000px;
+        width: 97%;
+        height: 600px;
+    }
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Result Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Result Dashboard</a></li>
+            </ol>
+        </nav>
+        {% comment %} <a href="{% url 'new_admission' %}" class="btn btn-primary text-light"
+            style="position: relative; left:70%; top:-50px;"><b> New Admission</b></a> {% endcomment %}
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="container" style="width:95%; text-align:right;">
+                        <a href="#" class="btn btn-primary" style="width:130px;" data-toggle="modal"  data-target="#add_result"><b><i class="bi bi-plus-lg"></i> Add Marks</b></a>
+                        <a href="#" class="btn btn-success" style="width:180px;" data-toggle="modal"  data-target="#generate_report"><b><i class="bi bi-envelope-paper"></i> Download Result</b></a>
+                    </div>
+                    
+
+                    <hr class="mt-3">
+
+                    <div class="container px-2 py-3" style="width:98%;">
+                        <div class="row" style="height:100%;">
+                    
+                            <div class="col-sm-7 mt-4">
+                                <div style="height:100%; box-shadow:0px 0px 5px -2px; border-radius:5px;" >
+                                    <div class="row">
+                                        <div class="col-sm-4 d-flex align-items-center justify-content-center flex-column ">
+                                            {% if st_data.student_profile %}
+                                            <img src="{{ st_data.student_profile.url }}" alt="" style="width:150px;height:150px; margin-top:10px;">
+                                            {% else %}
+                                            <img src="{% static 'img/profile_sample.jpg' %}" alt="" style="width:150px;height:150px; margin-top:10px;">
+                                            <br>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-sm-8"><br>
+                                            <div class="mt-3">
+                                            <div class="mt-2"><b>Name : </b> {{st_data.student_name}} <br></div>
+                                            <div class="mt-2"><b>Class : </b> {{st_data.student_class}} <br></div>
+                                            <div class="mt-2"><b>PRN No : </b> {{st_data.student_prn_no}} <br></div>
+                                            <div class="mt-2"><b>Mobile : </b> {{st_data.student_mobile}} <br></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 mt-4" >
+                                <div style="box-shadow:0px 0px 5px -2px; border-radius:5px;">
+                                    <canvas id="pie-chart" style="width:100%;"></canvas>
+                                </div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                    
+
+                    <div class="container"  style="width:98%;">
+                        <div class="mt-2 px-2"
+                            style="background:white; overflow:scroll; box-shadow:0px 0px 10px -3px; border-radius:10px; user-select: none; ">
+                            <center>
+                                <h2 class="mt-3" style="color:#4678A4;"><b>Progress Records</b></h2>
+                            </center>
+                            <table id="example" class="table table-striped "
+                                style="overflow:scroll; width:100%;min-width: max-content;">
+                                <thead>
+                                    <tr style="background:#4678A4;">
+                                        <th scope="col" class="text-center text-white" style="">Exam_Details</th>
+                                        <th scope="col" class="text-center text-white" style="">subject_name</th>
+                                        <th scope="col" class="text-center text-white" style="">min_marks</th>
+                                        <th scope="col" class="text-center text-white" style="">obtained_marks</th>
+                                        <th scope="col" class="text-center text-white" style="">out_off_marks</th>
+                                        <th scope="col" class="text-center text-white" style="">percentage</th>
+                                        <th scope="col" class="text-center text-white" style="">result</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for r in result_record %}
+                                    <tr class="text-center">
+                                        <td class="text-start"><b>{{r.exam_title}}</b> | <span
+                                                style="font-size:10px;">{{r.exam_start_date}} -
+                                                {{r.exam_end_date}}</span></td>
+                                        <td>{{r.subject_name}}</td>
+                                        <td>{{r.min_marks}}</td>
+                                        <td>{{r.obtained_marks}}</td>
+                                        <td>{{r.out_off_marks}}</td>
+                                        <td>{{r.percentage|floatformat:2}}%</td>
+                                        <td>{{r.result}}</td>
+                                        <td>
+                                            <a href=" " data-toggle="modal" data-target="#update_result"
+                                                onclick="update_result('{{r.id}}','{{r.subject_name}}','{{r.min_marks}}','{{r.obtained_marks}}','{{r.out_off_marks}}','{{r.percentage}}','{{r.result}}')"><i
+                                                    class="bi bi-pencil-square px-2" style="font-size:20px"></i></a>
+                                            <a href=" {% url 'delete_result' r.id %}"><i
+                                                    class="bi bi-trash-fill px-2 text-danger"
+                                                    style="font-size:20px"></i></a>  
+                                                    
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="generate_report" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Generate Progress Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <label for="report_type" class="form-label requiredField mt-1">Select Option</label>
+                    <select name="report_type" id="report_type" class="form-control " onchange=generate_report() required>
+                    <option value="">------</option>
+                    <option value="Subject Wise">Subject Wise</option>
+                    <option value="Exam Wise">Exam Wise</option>
+                </select>
+                
+                <span id="subject_select_generate_report" style="display:none;">
+                    <label for="select_subject_for_report" class="form-label requiredField mt-3">Select Subject</label>
+                    <select name="select_subject_for_report" id="select_subject_for_report" class="form-control">
+                        <option value="">------</option>
+                        {% for i in subject_name %}
+                        <option value="{{i.subject_name}}">{{i.subject_name}}</option>
+                        {% endfor %}
+                    </select>
+                </span>
+                                
+                <span id="exam_select_generate_report" style="display:none;">
+                    <label for="select_exam_for_report" class="form-label requiredField mt-3">Select Exam</label>
+                    <select name="select_exam_for_report" id="" class="form-control ">
+                        <option value="">------</option>
+                        {% for i in exam_record %}
+                        <option value="{{i.exam_title}} | {{i.exam_start_date}} | {{i.exam_end_date}}">
+                            {{i.exam_title}} | {{i.exam_start_date}} | {{i.exam_end_date}}</option>
+                        {% endfor %}
+                    </select>
+                </span>
+                
+                <span>
+                    <center>
+                        <input type="submit" class="btn btn-primary mt-3 px-4" value="View Result">
+                    </center>
+                </span>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade custom-modal" id="add_result" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Result</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if not exam_record %}
+                    <div class="alert alert-warning">Exam not schedule for your class <a href="{% url 'schedule_exam' %}" style="text-decoration:none; width:50%;">click here</a></div>
+                {% endif %}
+                {% if not subject_name %}
+                <div class="alert alert-warning">Subject not added for your class <a href="{% url 'manage_subjects' %}" style="text-decoration:none; width:50%;">click here</a></div>
+                {% endif %}
+                <form action="" method="POST" id="first-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="hidden" name="add_result" id="add_result">
+                            <input type="hidden" name="student_class" id="student_class" value="{{st_data.student_class}}">
+                            <input type="hidden" name="add_academic_session" id="add_academic_session">
+                            <input type="hidden" name="student_prn_no" id="student_prn_no"
+                                value={{st_data.student_prn_no}}>
+                            <label for="cmb_exam_name" class="form-label requiredField mt-4">Select Exam *</label>
+                            <select name="cmb_exam_name" class="form-control" required>
+                                <option value=""> ------ </option>
+                                {% for i in exam_record %}
+                                <option value="{{i.exam_title}} | {{i.exam_start_date}} | {{i.exam_end_date}}">
+                                    {{i.exam_title}} | {{i.exam_start_date}} | {{i.exam_end_date}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="subject_name" class="form-label requiredField mt-4">Select Subject *</label>
+                            <select name="subject_name" id="" class="form-control" required>
+                                <option value=""> ------ </option>
+                                {% for i in subject_name %}
+                                <option value="{{i.subject_name}}">{{i.subject_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <label for="min_marks" class="form-label requiredField mt-4">Minimum Mark *</label>
+                            <input type="number" name="min_marks" id="min_marks" placeholder="min_marks"
+                                class="form-control" onchange=calculate_percentage() required>
+                        </div>
+                        <div class="col-md">
+                            <label for="obtained_marks" class="form-label requiredField mt-4">Obtained Mark *</label>
+                            <input type="number" name="obtained_marks" id="obtained_marks" placeholder="obtained_marks"
+                                class="form-control" onchange=calculate_percentage() required>
+                        </div>
+                        <div class="col-md">
+                            <label for="out_off_marks" class="form-label requiredField mt-4">Out Of Mark *</label>
+                            <input type="number" name="out_off_marks" id="out_off_marks" placeholder="out_off_marks"
+                                class="form-control" onchange=calculate_percentage() required>
+                        </div>
+                        <div class="col-md">
+                            <label for="percentage" class="form-label requiredField mt-4">Percentage *</label>
+                            <input type="number" name="percentage" id="percentage" placeholder="percentage"
+                                class="form-control" style="background:#E6E6E6;cursor:disabled;" readonly>
+                        </div>
+                        <div class="col-md">
+                            <label for="result" class="form-label requiredField mt-4">Result *</label>
+                            <input type="text" name="result" id="result" placeholder="result" class="form-control"
+                                style="background:#E6E6E6;cursor:disabled;" readonly>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" value="Save changes" class="btn btn-primary">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade custom-modal" id="update_result" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Update Result</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" id="first-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="hidden" name="txt_update_result_id" id="txt_update_result_id">
+                            <input type="hidden" name="txt_update_academic_session" id="txt_update_academic_session">
+                            <input type="hidden" name="txt_update_student_prn_no" id="student_prn_no"
+                                value={{st_data.student_prn_no}}>
+
+                            <label for="cmb_update_exam_name" class="form-label requiredField mt-4">Select Exam
+                                *</label>
+                            <select name="cmb_update_exam_name" class="form-control" required>
+                                <option value="">------</option>
+                                {% for i in exam_record %}
+                                <option value="{{i.exam_title}} | {{i.exam_start_date}} | {{i.exam_end_date}}">
+                                    {{i.exam_title}} | {{i.exam_start_date}} | {{i.exam_end_date}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+
+                            <label for="cmb_update_subject_name" class="form-label requiredField mt-4">Select Subject
+                                *</label>
+                            <select name="cmb_update_subject_name" id="cmb_update_subject_name" class="form-control"
+                                required>
+                                <option value=""> ------ </option>
+                                {% for i in subject_name %}
+                                <option value="{{i.subject_name}}">{{i.subject_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <label for="txt_update_min_marks" class="form-label requiredField mt-4">Minimum Marks
+                                *</label>
+                            <input type="number" name="txt_update_min_marks" id="txt_update_min_marks"
+                                placeholder="min_marks" class="form-control mt-2" onchange=calculate_percentage()
+                                required>
+                        </div>
+                        <div class="col-md">
+                            <label for="txt_update_obtained_marks" class="form-label requiredField mt-4">Obtained Marks
+                                *</label>
+                            <input type="number" name="txt_update_obtained_marks" id="txt_update_obtained_marks"
+                                placeholder="obtained_marks" class="form-control mt-2" onchange=calculate_percentage()
+                                required>
+                        </div>
+                        <div class="col-md">
+                            <label for="txt_update_out_off_marks" class="form-label requiredField mt-4">Out Of Marks
+                                *</label>
+                            <input type="number" name="txt_update_out_off_marks" id="txt_update_out_off_marks"
+                                placeholder="out_off_marks" class="form-control mt-2" onchange=calculate_percentage()
+                                required>
+                        </div>
+                        <div class="col-md">
+                            <label for="txt_update_percentage" class="form-label requiredField mt-4">Percentage
+                                *</label>
+                            <input type="number" name="txt_update_percentage" id="txt_update_percentage"
+                                placeholder="percentage" class="form-control mt-2"
+                                style="background:#E6E6E6;cursor:disabled;" readonly>
+                        </div>
+                        <div class="col-md">
+                            <label for="txt_update_result" class="form-label requiredField mt-4">Result *</label>
+                            <input type="text" name="txt_update_result" id="txt_update_result" placeholder="result"
+                                class="form-control mt-2" style="background:#E6E6E6;cursor:disabled;" readonly>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" value="Save changes" class="btn btn-primary">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+            document.getElementById("add_academic_session").value="{{request.user.academic_session}}"
+            document.getElementById("txt_update_academic_session").value="{{request.user.academic_session}}"
+
+    function generate_report()
+    {
+        const selectElement = document.getElementById('report_type'); // select the element by its ID
+        const selectedValue = selectElement.value; // get the selected value
+        if (selectedValue == "Subject Wise") {
+            document.getElementById("subject_select_generate_report").style.display="block";
+            document.getElementById("exam_select_generate_report").style.display="none";
+        } else if (selectedValue == "Exam Wise") {
+            document.getElementById("subject_select_generate_report").style.display="none";
+            document.getElementById("exam_select_generate_report").style.display="block";
+        }
+    }
+
+    function update_result(id, subject_name, min_marks, obtained_marks, out_off_marks, percentage, result) {
+
+        document.getElementById('txt_update_result_id').value = id;
+        document.getElementById('cmb_update_subject_name').value = subject_name;
+        document.getElementById('txt_update_min_marks').value = min_marks;
+        document.getElementById('txt_update_obtained_marks').value = obtained_marks;
+        document.getElementById('txt_update_out_off_marks').value = out_off_marks;
+        document.getElementById('txt_update_percentage').value = percentage;
+        document.getElementById('txt_update_result').value = result;
+    }
+
+    function calculate_percentage() {
+        min_marks = document.getElementById("min_marks").value;
+        obtained_marks = document.getElementById("obtained_marks").value;
+        out_off_marks = document.getElementById("out_off_marks").value;
+        result = document.getElementById("result").value;
+        per = (obtained_marks / out_off_marks) * 100
+        document.getElementById("percentage").value = per;
+        if (!obtained_marks || !min_marks || !out_off_marks) {} else {
+            if (obtained_marks < min_marks) {
+                document.getElementById("result").value = "Fail";
+            } else {
+                document.getElementById("result").value = "Pass";
+            }
+        }
+
+
+        min_marks = document.getElementById("txt_update_min_marks").value;
+        obtained_marks = document.getElementById("txt_update_obtained_marks").value;
+        out_off_marks = document.getElementById("txt_update_out_off_marks").value;
+        result = document.getElementById("txt_update_result").value;
+        per = (obtained_marks / out_off_marks) * 100
+        document.getElementById("txt_update_percentage").value = per;
+        if (!obtained_marks || !min_marks || !out_off_marks) {} else {
+            if (obtained_marks < min_marks) {
+                document.getElementById("txt_update_result").value = "Fail";
+            } else {
+                document.getElementById("txt_update_result").value = "Pass";
+            }
+        }
+
+    }
+</script>
+
+<script>
+    var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: {{ data|safe }},
+            backgroundColor: [
+              '#3989FB', '#FB5739', '#9A39FB', '#FB39DB', '#47ADA6'
+            ],
+            label: 'Population'
+          }],
+          labels: {{ labels|safe }}
+        },
+        options: {
+          responsive: true
+        }
+      };
+  
+      window.onload = function() {
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+      };
+  
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "paging": true,
+            "pageLength": 10,
+            "searching": true
+        });
+    });
+</script>
+
+
+
+{% endblock content %}
